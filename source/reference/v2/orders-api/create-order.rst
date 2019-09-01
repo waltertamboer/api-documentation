@@ -163,8 +163,8 @@ Parameters
        .. type:: string
           :required: false
 
-     - The date the order should expire in ``YYYY-MM-DD`` format. The minimum date is tomorrow and the maximum date is
-       100 days after tomorrow.
+     - The date the order should expire in ``YYYY-MM-DD`` format, in ``Europe/Amsterdam`` time zone. The minimum date is
+       tomorrow and the maximum date is 100 days after tomorrow.
 
        .. note:: It is not posible to use Klarna Slice it or Klarna Pay later as method when your expiry date is more
                  than 28 days in the future, unless another maximum is agreed between the merchant and Klarna.

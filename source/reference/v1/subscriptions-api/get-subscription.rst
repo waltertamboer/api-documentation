@@ -114,7 +114,7 @@ Response
 
        .. type:: date
 
-     - The start date of the subscription in ``YYYY-MM-DD`` format.
+     - The start date of the subscription in ``YYYY-MM-DD`` format, in ``Europe/Amsterdam`` time zone.
 
    * - ``description``
 

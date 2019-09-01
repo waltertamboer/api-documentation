@@ -69,19 +69,21 @@ Response
 
        .. type:: string
 
-     - The invoice date in ``YYYY-MM-DD`` format.
+     - The invoice date in ``YYYY-MM-DD`` format, in ``Europe/Amsterdam`` time zone.
 
    * - ``paidAt``
 
        .. type:: string
 
-     - The date on which the invoice was paid, in ``YYYY-MM-DD`` format. Only for paid invoices.
+     - The date on which the invoice was paid, in ``YYYY-MM-DD`` format in ``Europe/Amsterdam`` time zone. Only for paid
+       invoices.
 
    * - ``dueAt``
 
        .. type:: string
 
-     - The date on which the invoice is due, in ``YYYY-MM-DD`` format. Only for due invoices.
+     - The date on which the invoice is due, in ``YYYY-MM-DD`` format in ``Europe/Amsterdam`` time zone. Only for due
+       invoices.
 
    * - ``netAmount``
 
@@ -161,7 +163,8 @@ Response
 
               .. type:: string
 
-            - The administrative period in ``YYYY-MM`` on which the line should be booked.
+            - The administrative period in ``YYYY-MM`` on which the line should be booked, in ``Europe/Amsterdam`` time
+              zone.
 
           * - ``description``
 

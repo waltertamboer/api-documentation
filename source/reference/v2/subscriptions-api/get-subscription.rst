@@ -123,15 +123,15 @@ Response
 
        .. type:: date
 
-     - The start date of the subscription in ``YYYY-MM-DD`` format.
+     - The start date of the subscription in ``YYYY-MM-DD`` format, in ``Europe/Amsterdam`` time zone.
 
    * - ``nextPaymentDate``
 
        .. type:: date
           :required: false
 
-     - The date of the next scheduled payment in ``YYYY-MM-DD`` format. When there will be no next payment, for example
-       when the subscription has ended, this parameter will not be returned.
+     - The date of the next scheduled payment in ``YYYY-MM-DD`` format, in ``Europe/Amsterdam`` time zone. When there
+       will be no next payment, for example when the subscription has ended, this parameter will not be returned.
 
    * - ``description``
 

@@ -897,14 +897,15 @@ SEPA Direct Debit
 
               .. type:: date
 
-            - Estimated date the payment is debited from the consumer's bank account, in ``YYYY-MM-DD`` format.
+            - Estimated date the payment is debited from the consumer's bank account, in ``YYYY-MM-DD`` format in
+              ``Europe/Amsterdam`` time zone.
 
           * - ``signatureDate``
 
               .. type:: date
 
             - Only available if the payment has been verified – Date the payment has been signed by the consumer, in
-              ``YYYY-MM-DD`` format.
+              ``YYYY-MM-DD`` format in ``Europe/Amsterdam`` time zone.
 
           * - ``bankReasonCode``
 

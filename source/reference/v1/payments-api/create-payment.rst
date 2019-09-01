@@ -168,8 +168,9 @@ Bank transfer
        .. type:: string
           :required: false
 
-     - The date the payment should :doc:`expire </payments/status-changes>`, in ``YYYY-MM-DD`` format.
-       **Please note:** the minimum date is tomorrow and the maximum date is 100 days after tomorrow.
+     - The date the payment should :doc:`expire </payments/status-changes>`, in ``YYYY-MM-DD`` format and in
+       ``Europe/Amsterdam`` time zone. **Please note:** the minimum date is tomorrow and the maximum date is 100 days
+       after tomorrow.
 
    * - ``locale``
 

@@ -91,8 +91,9 @@ Replace ``customerId`` in the endpoint URL by the customer's ID, for example
        .. type:: date
           :required: false
 
-     - The start date of the subscription in ``YYYY-MM-DD`` format. This is the first day on which your
-       customer will be charged. When this parameter is not provided, the current date will be used instead.
+     - The start date of the subscription in ``YYYY-MM-DD`` format, in ``Europe/Amsterdam`` time zone. This is the first
+       day on which your customer will be charged. When this parameter is not provided, the current date will be used
+       instead.
 
    * - ``description``
 
