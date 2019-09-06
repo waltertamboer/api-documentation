@@ -181,6 +181,12 @@ Response
 
      - The URL Mollie will call as soon an important status change on the order takes place.
 
+   * - ``sendReminders``
+
+       .. type:: boolean
+
+     - If order reminders are enabled for the order.
+
    * - ``createdAt``
 
        .. type:: datetime
@@ -647,6 +653,8 @@ Response
             "email": "luke@skywalker.com"
         },
         "redirectUrl": "https://example.org/redirect",
+        "webhookUrl": "https://example.org/webhook",
+        "sendReminders": true,
         "lines": [
             {
                 "resource": "orderline",

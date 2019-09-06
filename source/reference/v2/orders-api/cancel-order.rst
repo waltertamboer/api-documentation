@@ -147,6 +147,8 @@ Response
         },
         "canceledAt": "2018-08-03T09:29:56+00:00",
         "redirectUrl": "https://example.org/redirect",
+        "webhookUrl": "https://example.org/webhook",
+        "sendReminders": true,
         "lines": [
             {
                 "resource": "orderline",

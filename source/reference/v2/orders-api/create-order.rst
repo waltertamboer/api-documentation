@@ -166,8 +166,16 @@ Parameters
      - The date the order should expire in ``YYYY-MM-DD`` format. The minimum date is tomorrow and the maximum date is
        100 days after tomorrow.
 
-       .. note:: It is not posible to use Klarna Slice it or Klarna Pay later as method when your expiry date is more
+       .. note:: It is not possible to use Klarna Slice it or Klarna Pay later as method when your expiry date is more
                  than 28 days in the future, unless another maximum is agreed between the merchant and Klarna.
+
+   * - ``sendReminders``
+
+       .. type:: boolean
+          :required: false
+
+     - Order reminders are enabled by default. You can set this parameter to ``false`` if you don't want us
+       to send payment reminders to the shopper for this order.
 
 .. note::
    For orders, there is no ``description`` field. The description for any payments will be automatically created by
@@ -499,6 +507,7 @@ Example
                   "orderNumber": "1337",
                   "redirectUrl": "https://example.org/redirect",
                   "webhookUrl": "https://example.org/webhook",
+                  "sendReminders": false,
                   "method": "klarnapaylater",
                   "lines": [
                      {
@@ -601,6 +610,7 @@ Example
             "orderNumber" => "1337",
             "redirectUrl" => "https://example.org/redirect",
             "webhookUrl" => "https://example.org/webhook",
+            "sendReminders" => false,
             "method" => "klarnapaylater",
             "lines" => [
                   [
@@ -701,6 +711,7 @@ Example
           'orderNumber': '1337',
           'redirectUrl': 'https://example.org/redirect',
           'webhookUrl': 'https://example.org/webhook',
+          'sendReminders': false,
           'method': 'klarnapaylater',
           'lines': [
             {
@@ -802,6 +813,7 @@ Example
         orderNumber: '1337',
         redirectUrl: 'https://example.org/redirect',
         webhookUrl: 'https://example.org/webhook',
+        sendReminders: false,
         method: 'ideal',
         lines: [
           {
@@ -900,6 +912,7 @@ Example
           orderNumber: '1337',
           redirectUrl: 'https://example.org/redirect',
           webhookUrl: 'https://example.org/webhook',
+          sendReminders: false,
           method: 'klarnapaylater',
           lines: [
             {
@@ -1011,6 +1024,7 @@ Response
        },
        "redirectUrl": "https://example.org/redirect",
        "webhookUrl": "https://example.org/webhook",
+       "sendReminders": false,
        "lines": [
            {
                "resource": "orderline",

@@ -242,6 +242,8 @@ Response
             "email": "luke@skywalker.com"
         },
        "redirectUrl": "https://example.org/redirect",
+       "webhookUrl": "https://example.org/webhook",
+       "sendReminders": true,
         "lines": [
             {
                 "resource": "orderline",
