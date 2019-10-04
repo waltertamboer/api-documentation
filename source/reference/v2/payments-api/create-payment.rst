@@ -349,6 +349,20 @@ Credit card
 
        Please refer to the documentation of the :ref:`address object <address-object>`
        for more information on which inputs are accepted inputs.
+   * - ``delayCapture``
+
+       .. type:: boolean
+          :required: false
+
+     - If true, the amount will only be authorized and not captured immediately. Defaults to ``false``
+
+   * - ``captureDate``
+
+       .. type:: string
+          :required: false
+
+     - The date the payment will be captured, in ``YYYY-MM-DD`` format. If no ``captureDate`` is passed and no call is
+       made for the capture API, the authorisation will expire.
 
 Gift cards
 """"""""""
