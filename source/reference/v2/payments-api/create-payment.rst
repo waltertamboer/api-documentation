@@ -356,6 +356,8 @@ Credit card
 
      - If true, the amount will only be authorized and not captured immediately. Defaults to ``false``
 
+       .. note:: When ``delayCapture`` is set to ``true``, using a debit card like Maestro will result in an error.
+
    * - ``captureDate``
 
        .. type:: string
