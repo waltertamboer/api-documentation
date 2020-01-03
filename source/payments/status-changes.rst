@@ -62,29 +62,31 @@ abandons it. The expiry time is different for each payment method:
 Expiry times per payment method
 -------------------------------
 
-+---------------------------+-----------------------------------+
-| Payment methods           | Expiry time                       |
-+===========================+===================================+
-| - iDEAL                   | 15 minutes                        |
-| - paysafecard             |                                   |
-+---------------------------+-----------------------------------+
-| - Credit card             | 30 minutes                        |
-+---------------------------+-----------------------------------+
-| - Bancontact              | 1 hour                            |
-| - Belfius Pay Button      |                                   |
-| - EPS                     |                                   |
-| - Giropay                 |                                   |
-| - KBC                     |                                   |
-| - MyBank                  |                                   |
-| - Przelewy24              |                                   |
-| - SOFORT Banking          |                                   |
-+---------------------------+-----------------------------------+
-| - PayPal                  | 3 hours                           |
-+---------------------------+-----------------------------------+
-| - ING Home'Pay            | Next business day at 09:00 AM     |
-+---------------------------+-----------------------------------+
-| - Bank transfer [#f1]_    | 12(+2) days                       |
-+---------------------------+-----------------------------------+
++---------------------------------+-----------------------------------+
+| Payment methods                 | Expiry time                       |
++=================================+===================================+
+| - iDEAL                         | 15 minutes                        |
+| - paysafecard                   |                                   |
++---------------------------------+-----------------------------------+
+| - Credit card                   | 30 minutes                        |
++---------------------------------+-----------------------------------+
+| - Bancontact                    | 1 hour                            |
+| - Belfius Pay Button            |                                   |
+| - EPS                           |                                   |
+| - Giropay                       |                                   |
+| - KBC                           |                                   |
+| - MyBank                        |                                   |
+| - Przelewy24                    |                                   |
+| - SOFORT Banking                |                                   |
++---------------------------------+-----------------------------------+
+| - PayPal                        | 3 hours                           |
++---------------------------------+-----------------------------------+
+| - Klarna Pay Later. / Slice It. | 48 hours                          |
++---------------------------------+-----------------------------------+
+| - ING Home'Pay                  | Next business day at 09:00 AM     |
++---------------------------------+-----------------------------------+
+| - Bank transfer [#f1]_          | 12(+2) days                       |
++---------------------------------+-----------------------------------+
 
 .. note:: It is not a good idea to predict payment expiry. Best wait until your webhook is called and fetch the status
           as usual. This is the most reliable way to keep your system in sync with Mollie, also in the case of expiring
