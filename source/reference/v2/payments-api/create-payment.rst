@@ -81,8 +81,8 @@ Parameters
        the right page referencing the order when your customer returns.
 
        Only for payments with the ``sequenceType`` parameter set to ``recurring``, you can omit this parameter.
-       Additionally, for payments that are created with the ``applePayPaymentToken`` parameter, the redirect URL can
-       also be omitted.
+       Additionally, for payments that are created with the ``applePayPaymentToken`` or ``googlePayPaymentToken`` parameter,
+       the redirect URL can be omitted as well.
 
        *For all other payments, this parameter is mandatory.*
 
@@ -129,7 +129,8 @@ Parameters
        show payment methods from a specific country to your customer ``['bancontact', 'belfius', 'inghomepay']``.
 
        Possible values: ``applepay`` ``bancontact`` ``banktransfer`` ``belfius`` ``creditcard`` ``directdebit`` ``eps``
-       ``giftcard`` ``giropay`` ``ideal`` ``inghomepay`` ``kbc`` ``mybank``  ``paypal`` ``paysafecard`` ``przelewy24`` ``sofort``
+       ``giftcard`` ``giropay`` ``googlepay`` ``ideal`` ``inghomepay`` ``kbc`` ``mybank``  ``paypal`` ``paysafecard``
+       ``przelewy24`` ``sofort``
 
        .. note:: If you are looking to create payments with the Klarna Pay later or Klarna Slice it payment methods,
                  please use the :doc:`Create Order API </reference/v2/orders-api/create-order>` instead.
@@ -413,6 +414,28 @@ Gift cards
           :required: false
 
      - The PIN code on the gift card. Only required if there is a PIN code printed on the gift card.
+
+Google Pay
+""""""""""
+.. list-table::
+   :widths: auto
+
+   * - ``googlePayPaymentToken``
+
+       .. type:: string
+          :required: false
+
+     - The `Google Pay PaymentData
+       <https://developers.google.com/pay/api/web/reference/response-objects#PaymentData>`_  object
+       (encoded as JSON) that is part of the result of authorizing a payment request. The token contains the payment
+       information needed to authorize the payment.
+
+       The object should be passed encoded in a JSON string. Example:
+
+       ``{"apiVersion": 2, "apiVersionMinor": 0, "paymentMethodData": {...}}``
+
+       For documentation on how to get this token, see :doc:`/guides/googlepay-direct-integration`.
+
 
 iDEAL
 """""

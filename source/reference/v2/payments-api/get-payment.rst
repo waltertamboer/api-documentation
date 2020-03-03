@@ -803,7 +803,7 @@ Credit card
 
             - The wallet used when creating the payment.
 
-              Possible values: ``applepay``
+              Possible values: ``applepay`` ``googlepay``
 
 Gift cards
 """"""""""

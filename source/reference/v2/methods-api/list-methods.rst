@@ -1,5 +1,6 @@
-List payment methods
-====================
+List enabled payment methods API
+================================
+
 .. api-name:: Methods API
    :version: 2
 
@@ -99,9 +100,11 @@ Parameters
           :required: false
 
      - A comma-separated list of the wallets you support in your checkout. Wallets often require wallet specific code to
-       check if they are available on the shoppers device, hence the need to indicate your support.
+       check if they are available on the shoppers device, hence the need to indicate your support [#f1]_ [#f2]_.
 
-       At the moment, the only supported wallet is ``applepay``.
+       Note that you still have to test in the browser if the wallet should be displayed.
+
+       At the moment, the only supported wallets are ``applepay`` and ``googlepay``.
 
        Example: ``https://api.mollie.com/v2/methods?includeWallets=applepay``
 
@@ -374,3 +377,8 @@ Response
            }
        }
    }
+
+.. rubric:: Footnotes
+
+.. [#f1] For Apple Pay, use the `canMakePayments() function <https://developer.apple.com/documentation/apple_pay_on_the_web/applepaysession/1778027-canmakepayments>`_.
+.. [#f2] For Google Pay, use the `isReadyToPay() function <https://developers.google.com/pay/api/web/reference/client#isReadyToPay>`_.

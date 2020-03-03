@@ -18,7 +18,7 @@ Benefits of payments via the Mollie Checkout
 
 * Full support for :doc:`QR codes </guides/qr-codes>`.
 
-* Full support for wallets such as  :doc:`Apple Pay </wallets/applepay>`.
+* Full support for wallets such as :doc:`/wallets/applepay` and :doc:`/wallets/googlepay`.
 
 * Mollie optimizes the order of payment methods. For Dutch customers we know to list iDEAL at the top while for Belgians
   we start off with the payment method Bancontact. A lot of effort goes into this and we optimize this using

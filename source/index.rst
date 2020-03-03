@@ -1,7 +1,7 @@
 Mollie API: simple & powerful
 =============================
 
-Use the Mollie API to integrate online payments by Mollie directly into your website or app. Mollie and your website 
+Use the Mollie API to integrate online payments by Mollie directly into your website or app. Mollie and your website
 or app back-end will communicate by sending HTTP requests back and forth.
 
 This page provides an overview of the Mollie API. The topics in the chapter deal with a number of specific aspects of
@@ -59,6 +59,7 @@ Mollie is always adding new payment methods. The Mollie API currently supports t
 Additionally, the following wallets are supported:
 
 * `Apple Pay <https://www.mollie.com/payments/apple-pay>`_
+* `Google Pay <https://www.mollie.com/payments/google-pay>`_
 
 All of the payment methods you have enabled are – where relevant – shown to the consumer. You can enable payment methods
 using the `Mollie Dashboard <https://www.mollie.com/dashboard/settings/profiles>`_.
