@@ -100,6 +100,8 @@ Parameters
           you want to use webhook during development on ``localhost``, you must use a tool like
           `ngrok <https://lornajane.net/posts/2015/test-incoming-webhooks-locally-with-ngrok>`_ to have the webhooks
           delivered to your local machine.
+          
+          The POST data of the webhookUrl will contain the ID of the order unlike the Payments API where it contains the ID of the  payment.
 
    * - .. param-name:: locale
 
