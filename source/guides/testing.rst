@@ -27,6 +27,10 @@ For paid test mode payments the resource will also include the ``changePaymentSt
 :doc:`create a refund </payments/refunds>` or chargeback for that payment directly from our hosted payment page.
 This can be used to test refund and chargeback functionality.
 
+If you are using the Mollie checkout the status failed or cancelled will not trigger the webhook call and redirect URL. Instead the shopper is returned to the payment method selection page. The shopper can select an other payment method to try again.
+
+Cancelling the payment can be done by clicking the link in the bottom left corner labeled 'previous website'. We will call the webhook and the shopper will be redirected to the redirect URL.
+
 Apart from the hosted payment pages and the fact that test mode payments are created instead of real
 ones, the Mollie API behaves identical in both environments. This includes calling your
 :doc:`webhook </guides/webhooks>`.
