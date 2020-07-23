@@ -552,12 +552,14 @@ Bancontact
           * - ``cardNumber``
 
               .. type:: string
+                 :required: false
 
             - Only available if the payment is completed - The last four digits of the card number.
 
           * - ``cardFingerprint``
 
               .. type:: string
+                 :required: false
 
             - Only available if the payment is completed - Unique alphanumeric representation of card, usable for
               identifying returning customers.
@@ -569,6 +571,7 @@ Bancontact
           * - ``qrCode``
 
               .. type:: QR code object
+                 :required: false
 
             - Only available if requested during payment creation - The QR code that can be scanned by the mobile
               Bancontact application. This enables the desktop to mobile feature.
@@ -576,12 +579,14 @@ Bancontact
           * - ``consumerName``
 
               .. type:: string
+                 :required: false
 
             - Only available if the payment is completed – The consumer's name.
 
           * - ``consumerAccount``
 
               .. type:: string
+                 :required: false
 
             - Only available if the payment is completed – The consumer's bank account. This may be an IBAN, or it
               may be a domestic account number.
@@ -589,8 +594,25 @@ Bancontact
           * - ``consumerBic``
 
               .. type:: string
+                 :required: false
 
             - Only available if the payment is completed – The consumer's bank's BIC / SWIFT code.
+
+          * - ``failureReason``
+
+              .. type:: string
+                 :required: false
+
+            - Only available for failed payments. Contains a numeric failure reason code.
+
+          * - ``failureMessage``
+
+              .. type:: string
+                 :required: false
+
+            - A localized message that can be shown to your customer, depending on the ``failureReason``.
+
+              Example value: ``Card Daily limit exceeded.``.
 
 Bank transfer
 """""""""""""
