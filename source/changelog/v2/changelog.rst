@@ -7,7 +7,7 @@ July 2020
 =========
 
 Thursday, 23rd
--------------
+--------------
 
 - We have added ``failureReason`` and ``failureMessage`` to the ``details`` object in the
   `:doc:`Payment API response </reference/v2/payments-api/get-payment>`. This contains the reason
