@@ -227,9 +227,9 @@ The order lines contain the actual things that your customer bought.
 
      - The category of product bought. Must be one of the following values:
 
-       * ``food_and_drinks``
-       * ``home_and_garden``
-       * ``gifts_and_flowers``
+       * ``eco``
+       * ``gift``
+       * ``meal``
 
        .. note:: This parameter is optional. However, *one* of your order lines should contain it if
                  you want to accept ``mealvoucher`` payments. We advise to set this parameter for all
@@ -536,7 +536,7 @@ Example
                   "lines": [
                      {
                            "type": "physical",
-                           "category": "gifts_and_flowers",
+                           "category": "gift",
                            "sku": "5702016116977",
                            "name": "LEGO 42083 Bugatti Chiron",
                            "productUrl": "https://shop.lego.com/nl-NL/Bugatti-Chiron-42083",
