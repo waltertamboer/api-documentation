@@ -10,14 +10,15 @@ Self-Assessment Questionnaire A)` compliant.
 At a high level, it works by using a Javascript API to add fields to your checkout that your customer will use to enter
 their credit card details, such as their card number.
 
-Mollie Components does not give you access to the card holder data. Instead, when the checkout is submitted, you use
-Mollie Components to exchange the card holder data for a ``cardToken`` which you can use with the
+Mollie Components does not give you access to the card holder data. Instead you need to create a payment upfront with the
 :doc:`Create Payment API </reference/v2/payments-api/create-payment>` or
-:doc:`/reference/v2/orders-api/create-order`.
+:doc:`/reference/v2/orders-api/create-order`. After creating this payment you will receive a ``transaction id``. with this 
+id you can finalize the payment. 
 
-Depending on various factors, the payment will either be completed immediately or you will get a ``_links.checkout``
-URL where your customer can perform the 3-D Secure authentication. If the customer authenticates successfully, the
-payment is completed.
+Depending on various factors, the payment will either be completed frictionless (immediately) or the customer needs to perform
+the 3-D Secure authentication. If the customer authenticates successfully, the payment is completed. 
+
+The 3-D Secure will be shown via an iFrame on your checkout in either a lightbox/modal or in a DOM target defined by you. 
 
 Implementation steps
 --------------------
@@ -30,13 +31,11 @@ Follow these steps to implement Mollie Components in your checkout:
 #. Initialize the ``Mollie`` object.
 #. Create and mount the four Components for the four credit card fields (card holder, card number, expiry date and
    :abbr:`CVC (Card Verification Code)`). This will add the fields to your checkout.
-#. Add a ``submit`` event listener to your form to retrieve the ``cardToken`` when your customer has completed the
-   checkout form.
-#. Send the ``cardToken`` to your back end, by adding it to your form.
-#. From your back end, create a credit card Payment or Order with the ``cardToken`` using the
-   :doc:`Create Payment API </reference/v2/payments-api/create-payment>` or
-   :doc:`/reference/v2/orders-api/create-order` respectively.
-#. If required, redirect the shopper to the URL returned by our API for 3-D Secure authentication.
+#. Add a ``submit`` event listener to your form so you can create :doc:`Create Payment API </reference/v2/payments-api/create-payment>` or
+   :doc:`/reference/v2/orders-api/create-order` respectively for a JIT (just in time) checkout.
+#. Send the ``transactionID`` along with the amount and currency to the finalizeCreditCardPayment method 
+#. Mollie Components will figure out if 3 D secure is necessary and if so it will be presented to the merchant.
+#. After 3 D secure is been handled correctly by the customer the payment will be captured.
 
 Mollie has created `example implementations <https://github.com/mollie/components-examples>`_ you can use to get started.
 
@@ -148,32 +147,39 @@ Errors will be localized according to the locale defined when initializing Molli
 Add a submit event listener to your form
 ----------------------------------------
 
-Add a submit event listener to your form and use the :ref:`components-mollie-create-token` function to get the token.
-You can then place the ``cardToken`` in a hidden input to submit it to your back end, for example:
+Add a submit event listener to your form. In this method we want to retrieve the transactionID. This will be the input for the 
+``finalizeCreditCardPayment`` method take a look at the the reference for the  [TODO! LINK TO METHOD].
+
+You may already have the transactionID upfront. This is scenario is possible and valid if the the Amount and Currency will not change. 
+This is for example the case if you use a multi step form checkout. 
+:
 
 .. code-block:: js
    :linenos:
 
    form.addEventListener('submit', async e => {
      e.preventDefault();
+     // From this point we need the payment detail transactionID.
+     try {
+       // Fetch the transactionID if needed
+       const { transactionID } = await fetch('www.yourApiDomain.com/getTransactionId')
+       .then(response => response.json());
 
-     const { token, error } = await mollie.createToken();
+       // This call will try to finalize the payment and show the 3 D secure in a lightbox. For customization see the api reference 
+       const Response = await mollie.finalizeCreditCardPayment(transactionID);
 
-     if (error) {
+      if(Response.data.success === true){
+         // The redirect URL  is returned you may use it but not required
+         // window.location.href = Response.data.redirectUrl;
+      }
+
+     } catch (e) {
        // Something wrong happened while creating the token. Handle this situation gracefully.
-       return;
+       console.log(e);
      }
 
-     // Add token to the form
-     const tokenInput = document.createElement('input');
-     tokenInput.setAttribute('type', 'hidden');
-     tokenInput.setAttribute('name', 'cardToken');
-     tokenInput.setAttribute('value', token);
-
-     form.appendChild(tokenInput);
-
-     // Submit form to the server
-     form.submit();
+     // Do what ever you please
+     // form.submit();
    });
 
 Create a Payment or Order with the card token
