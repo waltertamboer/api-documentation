@@ -7,18 +7,19 @@ Self-Assessment Questionnaire A)` compliant.
 
 .. figure:: ../images/mollie-components-preview@2x.jpg
 
-At a high level, it works by using a Javascript API to add fields to your checkout that your customer will use to enter
+At a high level, Mollie Components works by using a Javascript API to add fields to your checkout that your customer will use to enter
 their credit card details, such as their card number.
 
-Mollie Components does not give you access to the card holder data. Instead you need to create a payment upfront with the
-:doc:`Create Payment API </reference/v2/payments-api/create-payment>` or
-:doc:`/reference/v2/orders-api/create-order`. After creating this payment you will receive a ``transaction id``. with this 
-id you can finalize the payment. 
+Mollie Components does not give you access to the card holder data. Instead you need to create a payment intent upfront using the
+:doc:`Create Payment API </reference/v2/payments-api/create-payment>`.
+A successful call to this API would return an identifier for the transaction that you need to pass to Mollie Components to initialize
+the frontend and let the shopper pay.
 
-Depending on various factors, the payment will either be completed frictionless (immediately) or the customer needs to perform
-the 3-D Secure authentication. If the customer authenticates successfully, the payment is completed. 
+Depending on various factors, the payment will either be completed frictionless (immediately) or the shopper needs to perform
+the `3D Secure authentication <https://help.mollie.com/hc/en-us/articles/115000696789-What-is-3D-Secure-and-how-do-I-activate-it->`_.
+If the customer authenticates successfully, the payment is completed.
 
-The 3-D Secure will be shown via an iFrame on your checkout in either a lightbox/modal or in a DOM target defined by you. 
+The 3D Secure will be shown via an iFrame on your checkout in either a lightbox/modal or in a DOM target defined by you.
 
 Implementation steps
 --------------------
@@ -33,9 +34,9 @@ Follow these steps to implement Mollie Components in your checkout:
    :abbr:`CVC (Card Verification Code)`). This will add the fields to your checkout.
 #. Add a ``submit`` event listener to your form so you can create :doc:`Create Payment API </reference/v2/payments-api/create-payment>` or
    :doc:`/reference/v2/orders-api/create-order` respectively for a JIT (just in time) checkout.
-#. Send the ``transactionID`` along with the amount and currency to the finalizeCreditCardPayment method 
-#. Mollie Components will figure out if 3 D secure is necessary and if so it will be presented to the merchant.
-#. After 3 D secure is been handled correctly by the customer the payment will be captured.
+#. Send the transaction ``id`` along with the amount and currency to the ``finalizeCreditCardPayment`` method
+#. Mollie Components will figure out if 3D Secure is necessary and if so it will be presented to the merchant.
+#. After 3D Secure has been handled correctly by the customer the payment will be captured.
 
 Mollie has created `example implementations <https://github.com/mollie/components-examples>`_ you can use to get started.
 
@@ -89,7 +90,7 @@ After initializing the Mollie object, you should create the four card holder dat
 .. code-block:: html
    :linenos:
 
-   <form>    
+   <form>
      <div id="card-number"></div>
      <div id="card-number-error"></div>
 
@@ -147,11 +148,11 @@ Errors will be localized according to the locale defined when initializing Molli
 Add a submit event listener to your form
 ----------------------------------------
 
-Add a submit event listener to your form. In this method we want to retrieve the transactionID. This will be the input for the 
+Add a submit event listener to your form. In this method we want to retrieve the transactionID. This will be the input for the
 ``finalizeCreditCardPayment`` method take a look at the the reference for the  [TODO! LINK TO METHOD].
 
-You may already have the transactionID upfront. This is scenario is possible and valid if the the Amount and Currency will not change. 
-This is for example the case if you use a multi step form checkout. 
+You may already have the transactionID upfront. This is scenario is possible and valid if the the Amount and Currency will not change.
+This is for example the case if you use a multi step form checkout.
 :
 
 .. code-block:: js
@@ -165,7 +166,7 @@ This is for example the case if you use a multi step form checkout.
        const { transactionID } = await fetch('www.yourApiDomain.com/getTransactionId')
        .then(response => response.json());
 
-       // This call will try to finalize the payment and show the 3 D secure in a lightbox. For customization see the api reference 
+       // This call will try to finalize the payment and show the 3 D secure in a lightbox. For customization see the api reference
        const Response = await mollie.finalizeCreditCardPayment(transactionID);
 
       if(Response.data.success === true){
@@ -340,10 +341,10 @@ Make sure you use the API key that belongs to the same profile you used when ini
 
 It is possible an error occurs when creating the payment. See :doc:`handling-errors` on what to do in such cases.
 
-Redirect the shopper to the 3-D Secure authentication page
+Redirect the shopper to the 3D Secure authentication page
 ----------------------------------------------------------
 
-In most cases, your payment will not be completed immediately but will first require a 3-D Secure authentication by your
+In most cases, your payment will not be completed immediately but will first require a 3D Secure authentication by your
 customer. You should redirect your customer to the ``_links.checkout`` URL returned by the
 :doc:`/reference/v2/payments-api/create-payment` or :doc:`/reference/v2/orders-api/create-order`.
 Your customer can then authenticate him / herself with the card issuer.
