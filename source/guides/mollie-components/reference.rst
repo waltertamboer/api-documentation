@@ -49,41 +49,6 @@ Mollie(profileId[, options])
             - Set to ``true`` to enable test mode. Test tokens will be recognizable by the ``test`` suffix e.g. `tkn_123abctest`.
 
 
-.. _components-mollie-create-token:
-
-mollie.createToken()
---------------------
-Calling the ``createToken`` method will receive a token if successful. This token must then be sent to your back end
-where it can be passed as the ``cardToken`` parameter to the
-:doc:`Create Payment API </reference/v2/payments-api/create-payment>`.
-
-This method has to be invoked from the ``submit`` event of your checkout form:
-
-Javascript
-^^^^^^^^^^
-.. code-block:: js
-   :linenos:
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-
-      mollie.createToken().then(function(result) {
-        // Handle the result this can be either result.token or result.error.
-      });
-    });
-
-ES6
-^^^
-.. code-block:: js
-   :linenos:
-
-   form.addEventListener('submit', async e => {
-     e.preventDefault();
-
-     const { token, error } = await mollie.createToken();
-   });
-
-
 .. _components-mollie-create-component:
 
 mollie.createComponent(type[, options])
