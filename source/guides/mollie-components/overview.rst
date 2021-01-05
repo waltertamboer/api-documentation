@@ -10,9 +10,9 @@ Self-Assessment Questionnaire A)` compliant.
 At a high level, Mollie Components works by using a Javascript API to add fields to your checkout that your customer will use to enter
 their credit card details, such as their card number.
 
-Mollie Components does not give you access to the card holder data. Instead you need to create a payment intent upfront using the
-:doc:`Create Payment API </reference/v2/payments-api/create-payment>`.
-A successful call to this API would return an identifier for the transaction that you need to pass to Mollie Components to initialize
+Mollie Components does not give you access to the card data. Instead you need to create a payment upfront using the
+:doc:`Create Payment </reference/v2/payments-api/create-payment>` or :doc:`Create Order </reference/v2/orders-api/create-order>` APIs.
+A successful call to this API will return a transaction identifier [TODO] that you need to pass to Mollie Components to initialize
 the frontend and let the shopper pay.
 
 Depending on various factors, the payment will either be completed frictionless (immediately) or the shopper needs to perform
@@ -28,15 +28,18 @@ Follow these steps to implement Mollie Components in your checkout:
 
 .. figure:: ../images/mollie-components-flow@2x.png
 
+[TODO]
+
 #. Add the Mollie Components Javascript library to your checkout.
 #. Initialize the ``Mollie`` object.
 #. Create and mount the four Components for the four credit card fields (card holder, card number, expiry date and
    :abbr:`CVC (Card Verification Code)`). This will add the fields to your checkout.
 #. Add a ``submit`` event listener to your form so you can create :doc:`Create Payment API </reference/v2/payments-api/create-payment>` or
-   :doc:`/reference/v2/orders-api/create-order` respectively for a JIT (just in time) checkout.
-#. Send the transaction ``id`` along with the amount and currency to the ``finalizeCreditCardPayment`` method
-#. Mollie Components will figure out if 3D Secure is necessary and if so it will be presented to the merchant.
-#. After 3D Secure has been handled correctly by the customer the payment will be captured.
+   :doc:`/reference/v2/orders-api/create-order` respectively for a JIT (just in time) checkout
+#. In your frontend, send the transaction identifier to the ``finalizeCreditCardPayment`` method.
+#. Mollie Components will figure out if 3D Secure is necessary and if so it will present a challenge to the customer.
+#. After 3D Secure has been handled correctly by the customer the payment will be captured
+#. Just like any other payment attempt, you will receive a webhook when the payment status changes
 
 Mollie has created `example implementations <https://github.com/mollie/components-examples>`_ you can use to get started.
 
@@ -65,7 +68,7 @@ The Javascript file is located at ``https://js.mollie.com/v1/mollie.js``.
 Initialize the Mollie object
 ----------------------------
 
-First, you need the Profile Id of the profile that you want to use. This can be found on the
+First, you need the Profile Id of the website profile that you want to use. This can be found on the
 `Developers - API-keys <https://www.mollie.com/dashboard/developers/api-keys>`_ page in the Dashboard or retrieved
 programmatically using the :doc:`Get Current Profile API </reference/v2/profiles-api/get-profile-me>`.
 
@@ -79,6 +82,8 @@ an object that you can use for creating the four Components your customer will u
 
 .. note:: Be aware the Profile Id is *not* your API key. Your API key is private and should never be used in a browser
           context. The Profile Id starts with ``pfl_``, where as API keys start with ``live_`` or ``test_``.
+
+[TODO - How test mode is going to happen]
 
 Create and mount the card holder data Components
 ------------------------------------------------
@@ -148,217 +153,38 @@ Errors will be localized according to the locale defined when initializing Molli
 Add a submit event listener to your form
 ----------------------------------------
 
-Add a submit event listener to your form. In this method we want to retrieve the transactionID. This will be the input for the
-``finalizeCreditCardPayment`` method take a look at the the reference for the  [TODO! LINK TO METHOD].
+Add a submit event listener to your form. In this method we want to retrieve the transaction identifier. This will be the input for the
+``finalizeCreditCardPayment`` method. Take a look at the the reference for the [TODO! LINK TO METHOD].
 
-You may already have the transactionID upfront. This is scenario is possible and valid if the the Amount and Currency will not change.
-This is for example the case if you use a multi step form checkout.
-:
+You may already have the transaction identifier upfront. This is scenario is possible and valid as long as the amount and currency of your
+payment is final and will not change. This is for example the case if you use a multi step form checkout.
 
 .. code-block:: js
    :linenos:
 
    form.addEventListener('submit', async e => {
      e.preventDefault();
-     // From this point we need the payment detail transactionID.
+     // From this point we need the payment detail transaction identifier.
      try {
-       // Fetch the transactionID if needed
+       // Fetch the transaction identifier if needed. Your backend can do that by calling the Mollie API
        const { transactionID } = await fetch('www.yourApiDomain.com/getTransactionId')
        .then(response => response.json());
 
-       // This call will try to finalize the payment and show the 3 D secure in a lightbox. For customization see the api reference
+       // This call will try to finalize the payment and show the 3D secure in a lightbox. For customization see the api reference
        const Response = await mollie.finalizeCreditCardPayment(transactionID);
 
       if(Response.data.success === true){
-         // The redirect URL  is returned you may use it but not required
-         // window.location.href = Response.data.redirectUrl;
+        // Now the payment is finalized, you can redirect the user to a success page, for example:
+        // window.location.href = Response.data.redirectUrl;
       }
 
      } catch (e) {
        // Something wrong happened while creating the token. Handle this situation gracefully.
        console.log(e);
      }
-
-     // Do what ever you please
-     // form.submit();
    });
 
-Create a Payment or Order with the card token
----------------------------------------------
-
-On your back end, you will receive the ``cardToken``. You need to pass this when
-:doc:`creating a Payment </reference/v2/payments-api/create-payment>`. Additionally, you should set the ``method`` to
-``creditcard``.
-
-Alternatively, you can use the :doc:`/reference/v2/orders-api/create-order`. and pass the card token
-via the ``payment.cardToken`` parameter.
-
-The ``cardToken`` is valid for 1 hour.
-
-Example
-^^^^^^^
-.. code-block-selector::
-   .. code-block:: bash
-      :linenos:
-
-      curl -X POST https://api.mollie.com/v2/payments \
-         -H "Authorization: Bearer live_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM" \
-         -d "method=creditcard" \
-         -d "amount[currency]=EUR" \
-         -d "amount[value]=10.00" \
-         -d "description=Order #12345" \
-         -d "redirectUrl=https://webshop.example.org/order/12345/" \
-         -d "webhookUrl=https://webshop.example.org/payments/webhook/" \
-         -d "cardToken=tkn_UqAvArS3gw"
-
-   .. code-block:: php
-      :linenos:
-
-      <?php
-      $mollie = new \Mollie\Api\MollieApiClient();
-      $mollie->setApiKey("live_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM");
-      $payment = $mollie->payments->create([
-            "method" => "creditcard",
-            "amount" => [
-                  "currency" => "EUR",
-                  "value" => "10.00"
-            ],
-            "description" => "Order #12345",
-            "redirectUrl" => "https://webshop.example.org/order/12345/",
-            "webhookUrl" => "https://webshop.example.org/payments/webhook/",
-            "cardToken" => "tkn_UqAvArS3gw",
-      ]);
-
-   .. code-block:: python
-      :linenos:
-
-      from mollie.api.client import Client
-
-      mollie_client = Client()
-      mollie_client.set_api_key('live_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM')
-      payment = mollie_client.payments.create({
-         'method': 'creditcard',
-         'amount': {
-               'currency': 'EUR',
-               'value': '10.00'
-         },
-         'description': 'Order #12345',
-         'webhookUrl': 'https://webshop.example.org/order/12345/',
-         'redirectUrl': 'https://webshop.example.org/payments/webhook/',
-         'cardToken': 'tkn_UqAvArS3gw'
-      })
-
-   .. code-block:: ruby
-      :linenos:
-
-      require 'mollie-api-ruby'
-
-      Mollie::Client.configure do |config|
-        config.api_key = 'live_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM'
-      end
-
-      payment = Mollie::Payment.create(
-        method: 'creditcard',
-        amount: {
-          currency: 'EUR',
-          value: '10.00'
-        },
-        description: 'Order #12345',
-        redirect_url: 'https://webshop.example.org/order/12345/',
-        webhook_url: 'https://webshop.example.org/payments/webhook/',
-        card_token: 'tkn_UqAvArS3gw'
-      )
-
-   .. code-block:: javascript
-      :linenos:
-
-      const { createMollieClient } = require('@mollie/api-client');
-      const mollieClient = createMollieClient({ apiKey: 'live_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM' });
-
-      (async () => {
-        const payment = await mollieClient.payments.create({
-          method: 'creditcard',
-          amount: {
-            currency: 'EUR',
-            value: '10.00', // We enforce the correct number of decimals through strings
-          },
-          description: 'Order #12345',
-          redirectUrl: 'https://webshop.example.org/order/12345/',
-          webhookUrl: 'https://webshop.example.org/payments/webhook/',
-          cardToken: 'tkn_UqAvArS3gw'
-        });
-      })();
-
-Response
-^^^^^^^^
-.. code-block:: none
-   :linenos:
-
-   HTTP/1.1 201 Created
-   Content-Type: application/hal+json
-
-   {
-       "resource": "payment",
-       "id": "tr_7UhSN1zuXS",
-       "mode": "test",
-       "createdAt": "2018-03-20T09:13:37+00:00",
-       "amount": {
-           "value": "10.00",
-           "currency": "EUR"
-       },
-       "description": "Order #12345",
-       "method": null,
-       "metadata": {
-           "order_id": "12345"
-       },
-       "status": "open",
-       "isCancelable": false,
-       "expiresAt": "2018-03-20T09:28:37+00:00",
-       "profileId": "pfl_3RkSN1zuPE",
-       "sequenceType": "oneoff",
-       "details": {
-          "cardToken": "tkn_UqAvArS3gw"
-       },
-       "redirectUrl": "https://webshop.example.org/order/12345/",
-       "webhookUrl": "https://webshop.example.org/payments/webhook/",
-       "_links": {
-           "self": {
-               "href": "https://api.mollie.com/v2/payments/tr_7UhSN1zuXS",
-               "type": "application/json"
-           },
-           "checkout": {
-               "href": "https://pay.mollie.com/authenticate/b47ef2ce1d3bea2ddadf3895080d1d4c",
-               "type": "text/html"
-           },
-           "documentation": {
-               "href": "https://docs.mollie.com/reference/v2/payments-api/create-payment",
-               "type": "text/html"
-           }
-       }
-   }
-
-Make sure you use the API key that belongs to the same profile you used when initializing the ``Mollie`` object.
-
-It is possible an error occurs when creating the payment. See :doc:`handling-errors` on what to do in such cases.
-
-Redirect the shopper to the 3D Secure authentication page
-----------------------------------------------------------
-
-In most cases, your payment will not be completed immediately but will first require a 3D Secure authentication by your
-customer. You should redirect your customer to the ``_links.checkout`` URL returned by the
-:doc:`/reference/v2/payments-api/create-payment` or :doc:`/reference/v2/orders-api/create-order`.
-Your customer can then authenticate him / herself with the card issuer.
-
-.. code-block:: none
-   :linenos:
-
-   HTTP/1.1 303 See Other
-   Date: Mon, 27 Jul 2019 12:28:53 GMT
-   Location: https://pay.mollie.com/authenticate/b47ef2ce1d3bea2ddadf3895080d1d4c
-   Connection: Closed
-
-It is possible an error occurs during or after 3-D Secure authentication. See :doc:`handling-errors` on how to handle
-these cases.
+[TODO make code ES5]
 
 Browser support
 ---------------
