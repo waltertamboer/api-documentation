@@ -155,8 +155,8 @@ Response
                "name": "ABN AMRO",
                "method": "ideal",
                "image": {
-                   "normal": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/ABNANL2A.png",
-                   "bigger": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/ABNANL2A%402x.png"
+                   "normal": "https://www.mollie.com/images/checkout/v3/ideal-issuer-icons/ABNANL2A.png",
+                   "bigger": "https://www.mollie.com/images/checkout/v3/ideal-issuer-icons/ABNANL2A%402x.png"
                }
            },
            {
@@ -165,8 +165,8 @@ Response
                "name": "ASN Bank",
                "method": "ideal",
                "image": {
-                   "normal": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/ASNBNL21.png",
-                   "bigger": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/ASNBNL21%402x.png"
+                   "normal": "https://www.mollie.com/images/checkout/v3/ideal-issuer-icons/ASNBNL21.png",
+                   "bigger": "https://www.mollie.com/images/checkout/v3/ideal-issuer-icons/ASNBNL21%402x.png"
                }
            },
            {
@@ -175,8 +175,8 @@ Response
                "name": "ING",
                "method": "ideal",
                "image": {
-                   "normal": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/INGBNL2A.png",
-                   "bigger": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/INGBNL2A%402x.png"
+                   "normal": "https://www.mollie.com/images/checkout/v3/ideal-issuer-icons/INGBNL2A.png",
+                   "bigger": "https://www.mollie.com/images/checkout/v3/ideal-issuer-icons/INGBNL2A%402x.png"
                }
            },
            { },
