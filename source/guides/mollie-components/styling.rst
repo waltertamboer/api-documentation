@@ -17,7 +17,7 @@ Most of the styling should be applied to the injected ``.mollie-component`` cont
 
 Inner styling options
 ---------------------
-There is some styling that can’t be styled from outside the iFrame. This is because iFrames will block CSS inheritance. Some of these properties, such as typography related, can be applied when :doc:`creating components </guides/mollie-components/reference#mollie-createcomponent-type-options>` You can apply these styles to three states ``base``, ``valid`` and ``invalid``:
+There is some styling that can’t be styled from outside the iFrame. This is because iFrames will block CSS inheritance. Some of these properties, such as typography related, can be applied when :doc:`creating components </guides/mollie-components/reference>` You can apply these styles to three states ``base``, ``valid`` and ``invalid``:
 
 ``base``
   The state of the Component when your customer has not entered any data yet or is entering data. These styles will also
