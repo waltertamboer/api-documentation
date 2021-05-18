@@ -4,6 +4,8 @@ Styling Mollie Components
 
 How to style a component
 ------------------------
+.. figure:: ../images/mollie-component-layout@2x.png
+
 Most of the styling should be applied to the injected ``.mollie-component`` container so no need to pass all the styling to the actual Component that lives inside the iFrame. The <div class="mollie-component" /> container lives completely in your own environment and thus will give the most flexible way of styling. To see how this works please visit our `Components Examples repository <https://github.com/mollie/components-examples>`_ for examples. The idea is that css classes on the container will be set to reflect the state of the component. These are the classes we set on the container:
 
 * ``mollie-component`` Will always be present. This will be a good class to style border and background properties.
