@@ -69,7 +69,7 @@ todo_include_todos = False
 
 # -- SEO stuff ------------------------------------------------------------
 redirects = {
-    'connect': 'https://docs.mollie.com/connect/overview',
+    'connect/': 'https://docs.mollie.com/connect/overview',
     'guides/authentication': 'https://docs.mollie.com/overview/authentication',
     'guides/checkout': 'https://docs.mollie.com/payments/hosted-checkout',
     'guides/common-data-types': 'https://docs.mollie.com/overview/common-data-types',
