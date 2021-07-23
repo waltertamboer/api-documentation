@@ -595,7 +595,7 @@ For these authentication methods the optional ``testmode`` parameter is availabl
 Mollie Connect parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 With Mollie Connect you can charge fees on payments that are processed through your app, either by defining an
-*application fee* or by *splitting the payment*. To learn more about the difference, please refer to the
+*application fee* or by *routing the payment*. To learn more about the difference, please refer to the
 :doc:`Mollie Connect overview </connect/overview>`.
 
 .. parameter:: applicationFee
@@ -650,7 +650,7 @@ With Mollie Connect you can charge fees on payments that are processed through y
    more connected accounts. Additionally, you can schedule (parts of) the payment to become available on the connected
    account on a future date.
 
-   See the :doc:`Split payments </connect/splitting-payments>` guide for more information on payment routing.
+   See the :doc:`Routed payments </connect/routing-payments>` guide for more information on payment routing.
 
    If a routing array is supplied, it must contain one or more routing objects with the following parameters.
 

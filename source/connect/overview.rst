@@ -54,7 +54,7 @@ gets sent to your own balance. The user in this case will still have their own d
 fees, and receive a Mollie invoice. For this case we offer :doc:`Application fees </connect/application-fees>`.
 
 For more advanced use cases, for example if you want to cover the Mollie payment fees yourself, or for example if you
-want to split a payment with another party, we offer :doc:`Split payments </connect/splitting-payments>`.
+want to split a payment with another party, we offer :doc:`Routed payments </connect/routing-payments>`.
 
 Referral commissions
 --------------------

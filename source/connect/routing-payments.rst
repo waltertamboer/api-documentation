@@ -1,26 +1,26 @@
-Splitting payments with Mollie Connect
+Routing payments with Mollie Connect
 ======================================
 .. note:: This feature is currently in closed beta. Please contact our partner management team if you are interested in
           testing this functionality with us.
 
-.. warning:: The split payments feature is not available for third-party payments methods (gift cards, Paypal, etc.) or
+.. warning:: The routed payments feature is not available for third-party payments methods (gift cards, Paypal, etc.) or
              captures (Klarna slice it, Klarna pay later, etc.)
 
-With **Split payments** you can distribute and split payments between your platform and your connected merchant
+With **Routed payments** you can distribute and split payments between your platform and your connected merchant
 accounts.
 
 When using this functionality, your platform will remain the 'owner' of the payment. The Mollie fees you negotiated are
 charged on your account directly, and will not be visible to your connected accounts. The chargeback liability also
 remains on your account.
 
-Splitting payments can also be useful if you want to control the timing and frequency of your users' settlements from
+Routing payments can also be useful if you want to control the timing and frequency of your users' settlements from
 Mollie.
 
 For simpler use cases, we offer :doc:`Application fees </connect/application-fees>`.
 
 Getting started: Connecting an account
 --------------------------------------
-To start connecting accounts to process payments for, please contact your Mollie partner manager. They can enable Split
+To start connecting accounts to process payments for, please contact your Mollie partner manager. They can enable Routed
 payments on your account.
 
 Once your account is setup properly, any new merchants you :doc:`onboard via your app </connect/onboarding>` will
@@ -99,8 +99,8 @@ On our own account, we will receive the remainder of €2,50 minus any payment f
 As soon as the payment is completed, the €7,50 will become available on the balance of the connected account, and the
 €2,50 will become available on the balance of your platform account.
 
-Delaying settlement of a split payment
---------------------------------------
+Delaying settlement of a routed payment
+---------------------------------------
 The settlement of a routed payment can be delayed on payment level, by specifying a ``releaseDate`` on a route when
 :doc:`creating a payment </reference/v2/payments-api/create-payment>`.
 
@@ -200,4 +200,4 @@ object:
        "releaseDate": "2026-01-01"
    }
 
-The release date can be up to two years from the day of the payment's creation. For test payments, this limit is 10 days.  
+The release date can be up to two years from the day of the payment's creation. For test payments, this limit is 10 days.

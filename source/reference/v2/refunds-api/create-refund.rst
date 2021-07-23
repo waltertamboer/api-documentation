@@ -66,18 +66,18 @@ If you are using :doc:`organization access tokens </overview/authentication>` or
 
 Mollie Connect parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-With Mollie Connect you can split payments that are processed through your app across multiple connected accounts. When
-creating refunds for those split payments, you can use the ``reverseRouting`` parameter to pull the split payment back
-to the platform balance. To learn more about creating refunds for split payments, please refer to the
-:doc:`Splitting payments guide </connect/splitting-payments>`.
+With Mollie Connect you can route payments that are processed through your app across multiple connected accounts. When
+creating refunds for those routed payments, you can use the ``reverseRouting`` parameter to pull the route payment back
+to the platform balance. To learn more about creating refunds for routed payments, please refer to the
+:doc:`Routing payments guide </connect/routing-payments>`.
 
 .. parameter:: reverseRouting
    :type: boolean
    :condition: optional
    :collapse: true
 
-   For a full reversal of the split that was specified during payment creation, simply set this parameter to ``true``.
-   For example, if a €10,00 payment got split by sending €2,50 to the platform and €7,50 to the connected account, then
+   For a full reversal of the route that was specified during payment creation, simply set this parameter to ``true``.
+   For example, if a €10,00 payment got routed by sending €2,50 to the platform and €7,50 to the connected account, then
    setting this parameter to ``true`` will pull back the €7,50 from the connected account.
 
 Response

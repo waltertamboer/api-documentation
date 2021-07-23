@@ -20,7 +20,7 @@ Mollie will then collect and settle the application fees to the ticketing platfo
 responsible for separately invoicing the theaters for the incurred fees, and for handling VAT.
 
 For more advanced use cases, for example if you want to cover the Mollie payment fees yourself, or for example if you
-want to split a payment with another party, we offer :doc:`Split payments </connect/splitting-payments>`.
+want to split a payment with another party, we offer :doc:`Routed payments </connect/routing-payments>`.
 
 Enabling application fees
 -------------------------

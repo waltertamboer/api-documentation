@@ -89,7 +89,7 @@ redirects = {
     'oauth/onboarding': 'https://docs.mollie.com/connect/onboarding',
     'oauth/overview': 'https://docs.mollie.com/connect/overview',
     'oauth/permissions': 'https://docs.mollie.com/connect/permissions',
-    'oauth/splitting-payments': 'https://docs.mollie.com/connect/splitting-payments',
+    'oauth/routing-payments': 'https://docs.mollie.com/connect/routing-payments',
     'payments/overview': 'https://docs.mollie.com/payments/accepting-payments',
     'reference/v2/organizations-api/list-organizations': 'https://docs.mollie.com/reference/reseller-api/v2/list-organizations'
 }
