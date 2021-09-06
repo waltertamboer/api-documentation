@@ -1,105 +1,24 @@
 Handling errors with Mollie Components
 ======================================
 When paying with a credit card, several errors can occur during the payment process that are outside of your or
-Mollie's control, e.g. the shopper has entered an incorrect CVV, has insufficient balance on his / her card or the
+Mollie's control, e.g. the shopper has entered an incorrect CVV, has insufficient balance on their card or the
 issuing bank could decline the transaction.
 
 In order to provide a good experience to the shopper when using Mollie Components, *handling errors* is of course
-essential.
-
-Should an error occur, you should make the shopper aware of the error so he / she can correct the problem and continue
+essential. Should an error occur, you should make the shopper aware of the error so they can correct the problem and continue
 the checkout.
-
-There are *two flows* to consider, depending on whether or not 3-D Secure [#f1]_ authentication is necessary.
-
-#. If **no 3-D Secure authentication is necessary** and an error occurs, an error response will immediately be returned
-   when when calling the :doc:`Create payment endpoint </reference/v2/payments-api/create-payment>`.
-   Should an error occur, then Mollie will not create a Payment.
-#. If **3-D Secure authentication is necessary**, Mollie will create a Payment and give you the ``_links.checkoutUrl``
-   where the shopper can authenticate the payment. If any errors occur during or after authentication, they will be
-   part of the response when retrieving the payment via the
-   :doc:`Get payment endpoint </reference/v2/payments-api/get-payment>`.
-
-The need for 3-D Secure authentication is determined by various factors, such as the estimated fraud risk for the
-payment and any agreements between you and Mollie. In the general case, 3-D Secure authentication will be necessary.
-However, you should always implement both flows.
 
 When creating a test mode payment, failure conditions can be triggered :doc:`using magic amounts </components/testing>`.
 
-Payments without 3-D Secure authentication
-------------------------------------------
-If no 3-D Secure authentication is necessary, you will receive the error upon creating the payment.
-
-If the error is caused by the shopper, the response from the
-:doc:`Create payment endpoint </reference/v2/payments-api/create-payment>` will contain the ``extra`` property with two
-additional keys:
-
-.. list-table::
-   :widths: auto
-
-   * - ``extra``
-
-       .. type:: object
-
-     - An object with details on the error.
-
-       .. list-table::
-          :widths: auto
-
-          * - ``failureReason``
-
-              .. type:: string
-
-            - Only available for failed payments. Contains a failure reason code.
-
-              Possible values: ``authentication_abandoned`` ``authentication_failed`` ``authentication_unavailable_acs``
-              ``card_declined`` ``card_expired`` ``inactive_card`` ``insufficient_funds`` ``invalid_cvv``
-              ``invalid_card_holder_name`` ``invalid_card_number`` ``invalid_card_type`` ``possible_fraud``
-              ``refused_by_issuer`` ``unknown_reason``
-
-          * - ``failureMessage``
-
-              .. type:: string
-
-            - A localized message that can be shown to the shopper, depending on the ``failureReason``.
-
-              Example value:
-              ``Der Kontostand Ihrer Kreditkarte ist unzureichend. Bitte verwenden Sie eine andere Karte.``.
-
-              This is provided as a convenience, you can of course also use your own messages.
-
-Example Create Payment API error response
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: none
-   :linenos:
-
-   HTTP/1.1 422 Unprocessable Entity
-   Content-Type: application/hal+json
-
-   {
-       "status": 422,
-       "title": "Unprocessable Entity",
-       "detail": "The card has insufficient funds",
-       "extra": {
-           "failureReason": "insufficient_funds",
-           "failureMessage": "Der Kontostand Ihrer Kreditkarte ist unzureichend. Bitte verwenden Sie eine andere Karte."
-       },
-       "_links": {
-           "documentation": {
-               "href": "https://docs.mollie.com/overview/handling-errors",
-               "type": "text/html"
-           }
-       }
-   }
-
-Payments with 3-D Secure authentication
+How can I find out what error occurred?
 ---------------------------------------
-If 3-D Secure authentication is necessary for the payment, the shopper will first have to authenticate him / herself
-with his / her card issuer. Any errors that occur will be available to you in the response of the
-:doc:`Get payment endpoint </reference/v2/payments-api/get-payment>` which you should call from your webhook.
+If creating the payment was unsuccessful, the API response will contain an error in the format shown
+:doc:`here </overview/handling-errors>`. If creating the payment was successful, Mollie will give you the
+``_links.checkoutUrl`` where the shopper will have to authenticate themselves with their card issuer (through 3-D Secure
+[#f1]_ authentication). Any errors that occur during or after authentication will be available to you in the response of
+the :doc:`Get payment endpoint </reference/v2/payments-api/get-payment>`, which you should call from your webhook.
 
-In this case, the payment status will be ``failed`` and final. For new payment attempts, you should collect a new card
+The payment status will be ``failed`` and final. For new payment attempts, you should collect a new card
 token and create a new payment using our API.
 
 The reason of the error will be available via the ``details`` object:
